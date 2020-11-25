@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.fsp.mapper.LoginMapper">
+    <sql id="table">user</sql>
+    <!--    <select id="getInfo" parameterType="String" resultType="com.example.fsp.bean.UserBean">-->
+    <!--        SELECT * FROM user WHERE name = #{name} AND password = #{password}-->
+    <!--    </select>-->
+    <!--    查询全部-->
+    <select id="getAll" resultType="com.example.fsp.bean.UserBean">
+        SELECT *FROM user
+    </select>
+    <!--    根据id查询-->
+    <select id="getUserById" resultType="com.example.fsp.bean.UserBean">
+        SELECT *FROM user where id=#{id}
+    </select>
+    <!--增加-->
+    <insert id="addUser" parameterType="com.example.fsp.bean.UserBean" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (name,password) VALUES (#{name},#{password})
+    </insert>
+    <!--修改-->
+    <update id="updateUser" parameterType="com.example.fsp.bean.UserBean" useGeneratedKeys="true" keyProperty="id">
+        UPDATE user SET name=#{name},password=#{password}
+        WHERE
+        id=#{id}
+    </update>
+    <!--删除-->
+    <delete id="delete" parameterType="com.example.fsp.bean.UserBean">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+    <!--    条件查询-->
+    <select id="findUserByCondition" parameterType="com.example.fsp.bean.UserBean"
+            resultType="com.example.fsp.bean.UserBean">
+        select * from user
+        <where>
+            <if test="name != null">
+                and name =#{name}
+            </if>
+            <if test="password !=null">
+                and password=#{password}
+            </if>
+        </where>
+    </select>
+<!--    根据queryvo中的id集合查询-->
+    <select id="findUserInIds" parameterType="com.example.fsp.bean.QueryVo"
+            resultType="com.example.fsp.bean.UserBean">
+        select * from <include refid="table"></include>
+        <where>
+            <if test="ids!=null and ids.size()>0">
+                <foreach collection="ids" open="and id in(" close=")" item="uid" separator=",">
+                    #{uid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>
