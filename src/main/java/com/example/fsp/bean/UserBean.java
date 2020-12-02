@@ -24,6 +24,8 @@ public class UserBean {
     @ExceptionCode(value = 100002,message = "密码验证错误")
     private String password;
 
+    private String token;
+
 //    public int getId() {
 //        return id;
 //    }
@@ -48,12 +50,14 @@ public class UserBean {
 //        this.password = password;
 //    }
 
+
     @Override
     public String toString() {
         return "UserBean{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

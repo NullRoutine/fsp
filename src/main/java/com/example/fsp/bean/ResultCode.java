@@ -10,7 +10,10 @@ public enum ResultCode {
 
     VALIDATE_FAILED(1002, "参数校验失败"),
 
+    AUTH_ERROR(6000, "认证错误"),
+
     ERROR(5000, "未知错误");
+
 
     private int code;
     private String msg;

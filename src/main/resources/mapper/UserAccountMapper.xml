@@ -36,7 +36,7 @@
             LEFT JOIN account a on u.id=a.user_id
             WHERE u.id=#{id}
     </select>
-    <select id="getUserWithCompany" parameterType="long" resultMap="UserMap">
+    <select id="getUserWithCompany" parameterType="long" resultMap="UserMap" useCache="true">
             SELECT u.id,u.name,c.id companyid,c.name companyname
             FROM user u
             LEFT JOIN company c on u.company_id=c.id

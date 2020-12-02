@@ -47,4 +47,7 @@ public interface LoginService {
     List<UserBean> findUserByCondition(UserBean userBean);
 
     List<UserBean> findUserInIds(QueryVo vo);
+
+    UserBean getInfoByLogin(UserBean userBean);
+
 }

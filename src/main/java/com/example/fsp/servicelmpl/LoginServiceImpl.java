@@ -2,16 +2,21 @@ package com.example.fsp.servicelmpl;
 
 import com.example.fsp.bean.QueryVo;
 import com.example.fsp.bean.UserBean;
+import com.example.fsp.bean.UserDetail;
 import com.example.fsp.mapper.LoginMapper;
 import com.example.fsp.service.LoginService;
 import com.example.fsp.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl implements LoginService, UserDetailsService {
 
     //    @Autowired
 //    RedisTemplate redisTemplate;
@@ -67,5 +72,25 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public List<UserBean> findUserInIds(QueryVo vo) {
         return loginMapper.findUserInIds(vo);
+    }
+
+    @Override
+    public UserBean getInfoByLogin(UserBean userBean) {
+        return loginMapper.getInfoByLogin(userBean);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        // 从数据库中查询出用户实体对象
+        System.out.println("loadUserByUsername------------->>>");
+        UserBean userBean = new UserBean();
+        userBean.setName(s);
+        UserBean user = loginMapper.findUserByCondition(userBean).get(0);
+        // 若没查询到一定要抛出该异常，这样才能被Spring Security的错误处理器处理
+        if (user == null) {
+            throw new UsernameNotFoundException("没有找到该用户");
+        }
+        // 走到这代表查询到了实体对象，那就返回我们自定义的UserDetail对象（这里权限暂时放个空集合，后面我会讲解）
+        return new UserDetail(user, Collections.emptyList());
     }
 }

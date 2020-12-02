@@ -3,7 +3,6 @@ package com.example.fsp.service;
 import com.example.fsp.bean.UserBean;
 
 public interface UserService {
-    UserBean loginIn(String name, String password);
     /**
      *
      * @param user 用户对象

@@ -11,6 +11,7 @@ public interface LoginMapper {
     @Select("SELECT * FROM user")
     List<UserBean> getLogin(@Param("name") String name);
 
+    UserBean getInfoByLogin(UserBean userBean);
     /**
      * 获取所有
      *

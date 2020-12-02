@@ -1,14 +1,12 @@
 package com.example.fsp.mapper;
 
-import com.example.fsp.bean.UserBean;
 import com.example.fsp.bean.UserModel;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    UserBean getInfo(String name, String password);
 
     /*
      * 一对一查询

@@ -1,6 +1,7 @@
 package com.example.fsp.servicelmpl;
 
 import com.example.fsp.bean.UserBean;
+import com.example.fsp.mapper.LoginMapper;
 import com.example.fsp.mapper.UserMapper;
 import com.example.fsp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ public class UserServiceImpl implements UserService {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private LoginMapper loginMapper;
 
-    @Override
-    public UserBean loginIn(String name, String password) {
-        return userMapper.getInfo(name, password);
-    }
+//    @Override
+//    public UserBean loginIn(UserBean userBean) {
+////        return userMapper.getInfoByLogin(userBean);
+//    }
 
     @Override
     public String addUser(UserBean user) {
@@ -29,4 +32,6 @@ public class UserServiceImpl implements UserService {
         //返回结果
         return "success" + row;
     }
+
+
 }

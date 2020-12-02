@@ -2,12 +2,17 @@ package com.example.fsp.controller;
 
 import com.example.fsp.bean.QueryVo;
 import com.example.fsp.bean.Result;
+import com.example.fsp.bean.ResultCode;
 import com.example.fsp.bean.UserBean;
+import com.example.fsp.config.APIException;
 import com.example.fsp.service.LoginService;
 import com.example.fsp.service.UserService;
+import com.example.fsp.utils.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,27 +29,52 @@ public class LoginController {
     UserService userService;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-//    @RequestMapping("/login")
+    @Autowired
+    private JwtUtil jwtManager;
+
+    //    @RequestMapping("/login")
 //    public String show() {
 //        return "login";
 //    }
+    @ApiOperation("用户登录")
+    @RequestMapping(value = "/loginIn", method = RequestMethod.POST)
+    public String login(@RequestBody @Valid UserBean userBean) {
+        System.out.println(userBean.toString());
+        UserBean userBeanTemp = loginService.getInfoByLogin(userBean);
+        // 若没有查到用户或者密码校验失败则抛出异常
+        if (userBeanTemp == null || !passwordEncoder.matches(userBean.getPassword(), userBeanTemp.getPassword())) {
+            throw new APIException(ResultCode.AUTH_ERROR, "账号密码错误");
+        }
 
-//    @RequestMapping(value = "/loginIn", method = RequestMethod.POST)
-//    public String login(String name, String password) {
-//        UserBean userBean = userService.loginIn(name, password);
-//        if (userBean != null) {
-//            return "success";
-//        } else {
-//            return "error";
-//        }
-//    }
+//        Authentication token = new UsernamePasswordAuthenticationToken(userBean.getName(), userBean.getPassword());
+//        // AuthenticationManager校验这个认证信息，返回一个已认证的Authentication
+//        Authentication authentication = authenticationManager.authenticate(token);
+//        // 将返回的Authentication存到上下文中
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // 需要返回给前端的VO对象
+        userBeanTemp.setToken(jwtManager.generate(userBeanTemp.getName()));
+        if (userBeanTemp != null) {
+            return "success"+userBeanTemp.toString();
+        } else {
+            return "error";
+        }
+    }
 
     @ApiOperation("添加用户")
     @PostMapping("/addUser")
     public Result addUser(@RequestBody @Valid UserBean userBean) {
-        loginService.addUser(userBean);
-        int id = userBean.getId();
+        // 将用户实体对象添加到数据库
+        UserBean userBean1 = new UserBean();
+        userBean1.setName(userBean.getName());
+        userBean1.setPassword(passwordEncoder.encode(userBean.getPassword()));
+        loginService.addUser(userBean1);
+        int id = userBean1.getId();
         return new Result<>(id);
     }
 

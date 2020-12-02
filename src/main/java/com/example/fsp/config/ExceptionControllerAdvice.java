@@ -19,8 +19,8 @@ public class ExceptionControllerAdvice {
 //        return new Result<>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
 //    }
     @ExceptionHandler(APIException.class)
-    public String APIExceptionHandler(APIException e) {
-        return e.getMsg();
+    public Result<String> APIExceptionHandler(APIException e) {
+        return new Result<>(e.getCode(), e.getMsg());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -31,8 +31,8 @@ public class ExceptionControllerAdvice {
         Field field = parameterType.getDeclaredField(fieldName);
         // 获取Field对象上的自定义注解
         ExceptionCode annotation = field.getAnnotation(ExceptionCode.class);
-        if(annotation!=null){
-            return new Result<>(annotation.value(),annotation.message(),defaultMessage);
+        if (annotation != null) {
+            return new Result<>(annotation.value(), annotation.message(), defaultMessage);
         }
         return new Result<>(ResultCode.VALIDATE_FAILED, defaultMessage);
     }

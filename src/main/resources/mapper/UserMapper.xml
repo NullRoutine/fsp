@@ -7,11 +7,16 @@
     <!--    </select>-->
     <!--    查询全部-->
     <select id="getAll" resultType="com.example.fsp.bean.UserBean">
-        SELECT *FROM user
+        SELECT * FROM user
+    </select>
+    <!--    登录查询-->
+    <select id="getInfoByLogin" resultType="com.example.fsp.bean.UserBean"
+            parameterType="com.example.fsp.bean.UserBean">
+            SELECT * FROM user where name=#{name}
     </select>
     <!--    根据id查询-->
     <select id="getUserById" resultType="com.example.fsp.bean.UserBean">
-        SELECT *FROM user where id=#{id}
+        SELECT * FROM user where id=#{id}
     </select>
     <!--增加-->
     <insert id="addUser" parameterType="com.example.fsp.bean.UserBean" useGeneratedKeys="true" keyProperty="id">
@@ -40,10 +45,11 @@
             </if>
         </where>
     </select>
-<!--    根据queryvo中的id集合查询-->
+    <!--    根据queryvo中的id集合查询-->
     <select id="findUserInIds" parameterType="com.example.fsp.bean.QueryVo"
             resultType="com.example.fsp.bean.UserBean">
-        select * from <include refid="table"></include>
+        select * from
+        <include refid="table"></include>
         <where>
             <if test="ids!=null and ids.size()>0">
                 <foreach collection="ids" open="and id in(" close=")" item="uid" separator=",">

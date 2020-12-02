@@ -1,17 +1,18 @@
 package com.example.fsp.config;
 
+import com.example.fsp.bean.ResultCode;
 import lombok.Getter;
 
 @Getter
 public class APIException extends RuntimeException {
-    private int code;
+    private ResultCode code;
     private String msg;
 
     public APIException(String msg) {
-        this(1001, msg);
+        this(ResultCode.ERROR, msg);
     }
 
-    public APIException(int code, String msg) {
+    public APIException(ResultCode code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
