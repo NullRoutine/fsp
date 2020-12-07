@@ -43,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 注意这里，是允许前端跨域联调的一个必要配置
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 // 指定某些接口不需要通过验证即可访问。登陆、注册接口肯定是不需要认证的
-//                .antMatchers("/user/loginIn", "/doc.html", "/webjars/**", "/img.icons/**", "/swagger-resources/**", "/**", "/v2/api-docs")//允许所有人访问knife4j
-                .antMatchers("/user/loginIn", "/user/addUser")//允许所有人访问knife4j
+                .antMatchers("/user/loginIn", "/doc.html", "/webjars/**", "/img.icons/**", "/swagger-resources/**", "/**", "/v2/api-docs")//允许所有人访问knife4j
+//                .antMatchers("/user/loginIn", "/user/addUser")//允许所有人访问knife4j
                 .permitAll()
                 // 这里意思是其它所有接口需要认证才能访问
                 .anyRequest()

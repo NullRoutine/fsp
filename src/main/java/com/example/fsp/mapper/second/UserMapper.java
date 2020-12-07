@@ -1,4 +1,4 @@
-package com.example.fsp.mapper;
+package com.example.fsp.mapper.second;
 
 import com.example.fsp.bean.UserModel;
 import org.apache.ibatis.annotations.Mapper;

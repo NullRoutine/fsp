@@ -1,4 +1,4 @@
-package com.example.fsp.mapper;
+package com.example.fsp.mapper.master;
 
 import com.example.fsp.bean.QueryVo;
 import com.example.fsp.bean.UserBean;
@@ -12,12 +12,18 @@ public interface LoginMapper {
     List<UserBean> getLogin(@Param("name") String name);
 
     UserBean getInfoByLogin(UserBean userBean);
+
     /**
      * 获取所有
      *
      * @return
      */
     List<UserBean> getAll();
+
+    /**
+     * 分页查询
+     */
+    List<UserBean> selectPage();
 
     /**
      * 根据id查询

@@ -1,9 +1,7 @@
 package com.example.fsp.bean;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
 public class Student {
     private int id;
     private int number;

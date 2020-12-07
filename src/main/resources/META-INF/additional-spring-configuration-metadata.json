@@ -4,5 +4,10 @@
       "name": "mybatis.spring.redis.password",
       "type": "java.lang.String",
       "description": "Description for mybatis.spring.redis.password."
-  }
-] }
+    },
+    {
+      "name": "master.datasource.driver-class-name",
+      "type": "java.lang.String",
+      "description": "Description for master.datasource.driver-class-name."
+    }
+  ] }

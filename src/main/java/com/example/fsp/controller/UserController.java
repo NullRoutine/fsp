@@ -1,7 +1,7 @@
 package com.example.fsp.controller;
 
 import com.example.fsp.bean.UserModel;
-import com.example.fsp.mapper.UserMapper;
+import com.example.fsp.mapper.second.UserMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

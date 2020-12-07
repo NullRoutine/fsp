@@ -20,29 +20,44 @@ spring:
         max-idle: 10
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: 100000
-
   datasource:
-    name: test  #数据库名
-    url: jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8 #url
-#    url: jdbc:mysql://localhost:3306/sys?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8 #url
-    username: root  #用户名
-    password: 123456  #密码
-    driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
-  jpa:
-    hibernate:
-      #      这里很关键，有多个值。
-      #       create 启动时删数据库中的表，然后创建，退出时不删除数据表
-      #       create-drop 启动时删数据库中的表，然后创建，退出时删除数据表 如果表不存在报错
-      #       update 如果启动时表格式不一致则更新表，原有数据保留
-      #      validate 项目启动表结构进行校验 如果不一致则报错
-      ddl-auto: update
-      show-sql: true
-      naming:
-        #        -- 这个是因为解决掉把驼峰转成下划线的问题
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    db1:
+#      name: test1  #数据库名
+      jdbc-url: jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8 #url
+      #    url: jdbc:mysql://localhost:3306/sys?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8 #url
+      username: root  #用户名
+      password: 123456  #密码
+      driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
+    db2:
+#      name: test2  #数据库名
+      jdbc-url: jdbc:mysql://localhost:3306/sys?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8 #url
+      username: root  #用户名
+      password: 123456  #密码
+      driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
+
+
+#  jpa:
+#    hibernate:
+#      #      这里很关键，有多个值。
+#      #       create 启动时删数据库中的表，然后创建，退出时不删除数据表
+#      #       create-drop 启动时删数据库中的表，然后创建，退出时删除数据表 如果表不存在报错
+#      #       update 如果启动时表格式不一致则更新表，原有数据保留
+#      #      validate 项目启动表结构进行校验 如果不一致则报错
+#      ddl-auto: update
+#      show-sql: true
+#      naming:
+#        #        -- 这个是因为解决掉把驼峰转成下划线的问题
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #配置映射文件
   type-aliases-package: com.example.fsp.bean #配置实体类
+
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 
 

@@ -1,8 +1,8 @@
 package com.example.fsp.servicelmpl;
 
 import com.example.fsp.bean.UserBean;
-import com.example.fsp.mapper.LoginMapper;
-import com.example.fsp.mapper.UserMapper;
+import com.example.fsp.mapper.master.LoginMapper;
+import com.example.fsp.mapper.second.UserMapper;
 import com.example.fsp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

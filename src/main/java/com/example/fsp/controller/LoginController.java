@@ -1,9 +1,6 @@
 package com.example.fsp.controller;
 
-import com.example.fsp.bean.QueryVo;
-import com.example.fsp.bean.Result;
-import com.example.fsp.bean.ResultCode;
-import com.example.fsp.bean.UserBean;
+import com.example.fsp.bean.*;
 import com.example.fsp.config.APIException;
 import com.example.fsp.service.LoginService;
 import com.example.fsp.service.UserService;
@@ -60,7 +57,7 @@ public class LoginController {
         // 需要返回给前端的VO对象
         userBeanTemp.setToken(jwtManager.generate(userBeanTemp.getName()));
         if (userBeanTemp != null) {
-            return "success"+userBeanTemp.toString();
+            return "success" + userBeanTemp.toString();
         } else {
             return "error";
         }
@@ -122,5 +119,17 @@ public class LoginController {
         list.add(104);
         queryVo.setIds(list);
         return new Result<>(loginService.findUserInIds(queryVo));
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param pageQuery
+     * @return
+     */
+    @ApiOperation("分页查询")
+    @PostMapping(value = "/findPage")
+    public Object findPage(@RequestBody PageRequest pageQuery) {
+        return loginService.findPage(pageQuery);
     }
 }
